@@ -8,7 +8,7 @@
       <defs>
         <!-- This puts an inner shadow on the empty part of gauge -->
         <filter :id="`innershadow-${_uid}`">
-          <feFlood flood-color="#c7c6c6" />
+          <feFlood :flood-color="shadowColor" />
           <feComposite in2="SourceAlpha" operator="out" />
           <feGaussianBlur stdDeviation="2" result="blur" />
           <feComposite operator="atop" in2="SourceGraphic" />
@@ -28,8 +28,8 @@
 
         <mask :id="`innerCircle-${_uid}`">
           <!-- Mask to make sure only the part inside the circle is visible -->
-          <!-- RADIUS - 0.5 to avoid any weird display -->
-          <circle :r="RADIUS - 0.5" :cx="X_CENTER" :cy="Y_CENTER" fill="white" />
+          <!-- RADIUS - 1.5 to avoid any weird display -->
+          <circle :r="RADIUS - 1.5" :cx="X_CENTER" :cy="Y_CENTER" fill="white" />
 
           <!-- Mask to remove the inside of the gauge -->
           <circle :r="innerRadius" :cx="X_CENTER" :cy="Y_CENTER" fill="black" />
@@ -63,7 +63,10 @@
           :r="RADIUS" :cx="X_CENTER" :cy="Y_CENTER"
           :fill="baseColor"
         />
-        <path v-else :d="gaugePath" :fill="baseColor" :filter="`url(#innershadow-${_uid})`" />
+        <path v-else
+              :d="gaugePath"
+              :fill="baseColor"
+              :filter="useShadows ? `url(#innershadow-${_uid})` : 'none'" />
       </g>
 
       <template v-if="scaleLines">
@@ -278,6 +281,17 @@
         type: Number,
         default: 1500,
       },
+      /**
+       *  Gauge shadows
+       */
+      useShadows: {
+        type: Boolean,
+        default: true,
+      },
+      shadowColor: {
+        type: String,
+        default: '#c7c6c6',
+      }
     },
     data() {
       return {
@@ -313,9 +327,9 @@
        * @type {String}
        */
       basePath() {
-        const { startAngle, endAngle } = this
+        const { startAngle, endAngle } = this;
 
-        return describePath(RADIUS, startAngle, endAngle)
+        return describePath(RADIUS, startAngle + 1, endAngle - 1);
       },
       /**
        * d property of the gauge according to the value.
@@ -324,8 +338,7 @@
        */
       gaugePath() {
         const { endAngle, getAngle, tweenedValue } = this
-
-        return describePath(RADIUS, getAngle(tweenedValue), endAngle)
+        return describePath(RADIUS, getAngle(tweenedValue), endAngle);
       },
       /**
        * Total angle of the gauge

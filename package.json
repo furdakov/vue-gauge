@@ -1,8 +1,8 @@
 {
-  "name": "vue-svg-gauge",
-  "version": "1.2.1",
+  "name": "@furdakov/vue-gauge",
+  "version": "0.1.0",
   "description": "Customizable gauge component with gradients and animations for VueJs",
-  "author": "Morgane LECURIEUX <morgane.lecurieux.lafayette@gmail.com>",
+  "author": "Viktor Furdakov <v.furdakov@gmail.com>",
   "main": "dist/vue-svg-gauge.js",
   "scripts": {
     "dev": "cd demo && yarn serve",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hellocomet/vue-svg-gauge.git"
+    "url": "https://github.com/furdakov/vue-gauge.git"
   },
   "keywords": [
     "vue-js",
@@ -29,13 +29,14 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hellocomet/vue-svg-gauge/issues"
+    "url": "https://github.com/furdakov/vue-gauge.git/issues"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.3.0"
   },
   "devDependencies": {
     "@tweenjs/tween.js": "^17.3.0",
+    "lodash": "^4.17.20",
     "babel-core": "^6.26.3",
     "babel-loader": "7",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
